@@ -22,7 +22,10 @@ body {
 .todolist {
     display: flex;
     gap: 30px;
-    justify-content: space-between;
+}
+
+.todolist__column {
+    flex: 0 1 33%;
 }
 
 .todolist__title {
@@ -51,7 +54,7 @@ body {
     margin-bottom: 15px;
 }
 
-.todoiten__flex {
+.todoitem__flex {
     display: flex;
     color: rgb(61, 61, 61);
     gap: 10px;
