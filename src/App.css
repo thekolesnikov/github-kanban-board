@@ -1,38 +1,77 @@
-.App {
-  text-align: center;
+body {
+    margin: 30px auto;
+    max-width: 1200px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.todo__form {
+    margin-bottom: 15px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.todo__input {
+    outline: 1px solid black;
+    padding: 5px 10px;
+    width: 70%;
+    margin-right: 30px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.todo__button {
+    cursor: pointer;
+    padding: 5px 10px;
 }
 
-.App-link {
-  color: #61dafb;
+.todolist {
+    display: flex;
+    gap: 30px;
+    justify-content: space-between;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.todolist__title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.todolist__todos {
+    background-color: gray;
+    padding: 30px 15px;
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.todoitem {
+    background-color: rgb(246, 242, 236);
+    width: 70%;
+    padding: 20px 10px;
+    margin-bottom: 40px;
+    cursor: pointer;
+}
+
+.todoitem div:not(:last-child) {
+    margin-bottom: 15px;
+}
+
+.todoiten__flex {
+    display: flex;
+    color: rgb(61, 61, 61);
+    gap: 10px;
+    align-items: center;
+}
+
+.repo__link {
+    font-size: 18px;
+    color: rgb(50, 155, 155);
+    margin-right: 20px;
+}
+
+.repo__link:hover {
+    text-decoration: underline;
+}
+
+.repo {
+    margin-bottom: 40px;
+}
+
+.error {
+    color: red;
 }
