@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import TodoItem from '../TodoItem/TodoItem';
+import { issuesSlice } from '../../redux/slices/issuesSlice';
 
 function TodoList() {
     const [boards, setBoards] = useState([
@@ -9,8 +10,10 @@ function TodoList() {
         { name: 'Done', items: [] },
     ]);
 
+    let allIssues = useSelector((state) => state.issues.issues);
     const repoInfo = useSelector((state) => state.issues.repo);
-    const allIssues = useSelector((state) => state.issues.issues);
+    const { dragIssue } = issuesSlice.actions;
+    const dispatch = useDispatch();
 
     const inProgressIssues = allIssues.filter(
         (issue) => issue.state === 'open'
@@ -49,6 +52,7 @@ function TodoList() {
         currentBoard.items.splice(currentIndex, 1);
         const dropIndex = board.items.indexOf(item);
         board.items.splice(dropIndex + 1, 0, currentItem);
+
         setBoards(
             boards.map((b) => {
                 if (b.name === board.name) {
@@ -60,12 +64,15 @@ function TodoList() {
                 return b;
             })
         );
+
+        dispatch(dragIssue({ currentItem, board }));
     }
 
     function dropCardHandler(e, board) {
         board.items.push(currentItem);
         const currentIndex = currentBoard.items.indexOf(currentItem);
         currentBoard.items.splice(currentIndex, 1);
+
         setBoards(
             boards.map((b) => {
                 if (b.name === board.name) {
@@ -77,11 +84,16 @@ function TodoList() {
                 return b;
             })
         );
+
+        dispatch(dragIssue({ currentItem, board }));
     }
+
+    //Сохраняем изменения в sessionStorage
+    sessionStorage.setItem(repoInfo.html_url, JSON.stringify(allIssues));
 
     return (
         <div className="todolist">
-            {repoInfo.error && <span className="error">Invalid URL</span>}
+            {repoInfo.message && <span className="error">Invalid URL</span>}
             {repoInfo.id &&
                 boards.map((board) => {
                     return (

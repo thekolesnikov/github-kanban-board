@@ -17,13 +17,21 @@ function Input() {
 
             const res = await Promise.all([fetch(urlIssues), fetch(urlCommon)]);
             const data = await Promise.all(res.map((r) => r.json()));
-            dispatch(loadIssues(data[0]));
-            dispatch(loadRepoInfo(data[1]));
 
+            //Если данные о данном репозитории уже есть в sessionStorage, то мы будем брать их из sessionStorage
+            if (sessionStorage.getItem(data[1].html_url)) {
+                dispatch(
+                    loadIssues(
+                        JSON.parse(sessionStorage.getItem(data[1].html_url))
+                    )
+                );
+            } else {
+                dispatch(loadIssues(data[0]));
+            }
+            dispatch(loadRepoInfo(data[1]));
             setInput('');
         } catch (error) {
-            dispatch(loadIssues([]));
-            dispatch(loadRepoInfo({ error: 'invalid url' }));
+            console.log(error);
         }
     }
 
